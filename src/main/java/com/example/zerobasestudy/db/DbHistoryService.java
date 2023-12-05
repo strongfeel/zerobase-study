@@ -1,10 +1,15 @@
 package com.example.zerobasestudy.db;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class DbHistoryTest {
+public class DbHistoryService {
 
-    public void dbSelect() {
+    public List<HistoryDto> historyList() {
+
+        List<HistoryDto> historyDtoList = new ArrayList<>();
+
         String url = "jdbc:mariadb://localhost:3306/testdb2";
         String dbUserId = "root";
         String dbPassword = "0211";
@@ -38,6 +43,14 @@ public class DbHistoryTest {
                 String y = rs.getString("Y");
                 String hDate = rs.getString("H_DATE");
 
+                HistoryDto historyDto = new HistoryDto();
+                historyDto.setH_ID(Integer.parseInt(hId));
+                historyDto.setX(x);
+                historyDto.setY(y);
+                historyDto.setH_DATE(hDate);
+
+                historyDtoList.add(historyDto);
+
                 System.out.println(hId + ", " + x + ", " + y + ", " + hDate);
             }
 
@@ -70,9 +83,11 @@ public class DbHistoryTest {
                 throw new RuntimeException(e);
             }
         }
+
+        return historyDtoList;
     }
 
-    public void dbInsert(HistoryDto historyDto) {
+    public void dbInsert(HistoryDto historyDto) { //히스토리 데이터 추가
         String url = "jdbc:mariadb://localhost:3306/testdb2";
         String dbUserId = "root";
         String dbPassword = "0211";
@@ -87,10 +102,6 @@ public class DbHistoryTest {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
-
-        String xValue = "";
-        String yValue = "";
-
 
         try {
             connection = DriverManager.getConnection(url, dbUserId, dbPassword);
@@ -141,7 +152,7 @@ public class DbHistoryTest {
         }
     }
 
-    public void dbDelete() {
+    public void dbDelete(HistoryDto historyDto) {
         String url = "jdbc:mariadb://localhost:3306/testdb2";
         String dbUserId = "root";
         String dbPassword = "0211";
@@ -157,8 +168,6 @@ public class DbHistoryTest {
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
 
-        String hIdValue = "";
-
         try {
             connection = DriverManager.getConnection(url, dbUserId, dbPassword);
 
@@ -166,7 +175,7 @@ public class DbHistoryTest {
                     " where H_ID = ? ";
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, hIdValue);
+            preparedStatement.setString(1, String.valueOf(historyDto.getH_ID()));
 
             int affected = preparedStatement.executeUpdate();
 

@@ -5,10 +5,10 @@ import java.util.Scanner;
 public class DbHistoryTestMain {
     public static void main(String[] args) {
 
-        DbHistoryTest dbHistoryTest = new DbHistoryTest();
-        //dbHistoryTest.dbSelect();
-        //dbHistoryTest.dbInsert();
-        //dbHistoryTest.dbDelete();
+        DbHistoryService dbHistoryService = new DbHistoryService();
+        //dbHistoryService.historyList();
+        //dbHistoryService.dbInsert();
+        //dbHistoryService.dbDelete();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -21,6 +21,6 @@ public class DbHistoryTestMain {
         historyDto.setX(x);
         historyDto.setY(y);
 
-        dbHistoryTest.dbInsert(historyDto);
+        dbHistoryService.dbInsert(historyDto);
     }
 }
