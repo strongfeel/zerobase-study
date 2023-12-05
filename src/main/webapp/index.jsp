@@ -12,7 +12,7 @@
 </head>
 <body>
     <h1>와이파이 정보 구하기</h1>
-    <a href="링크할 주소">홈</a> | <a href="링크할 주소">위치 히스토리 목록</a> | <a href="load_wifi.jsp">Open API 와이파이 정보 가져오기</a>
+    <a href="index.jsp">홈</a> | <a href="history.jsp">위치 히스토리 목록</a> | <a href="load-wifi.jsp">Open API 와이파이 정보 가져오기</a>
 </body>
 <script src="http://code.jquery.com/jquery-1.11.0.js"></script>
 <script>
@@ -39,8 +39,7 @@
 </head>
 <body>
 <ul>
-    <li>위도:<span id="latitude"></span></li>
-    <li>경도:<span id="longitude"></span></li>
+    <li>LAT:<span id="latitude"></span></li><li>, LNT:<span id="longitude"></span></li>
 </ul>
 <input id="btnStop" type="button" value="감시를 끝낸다" />
 </body>
