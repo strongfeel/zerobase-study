@@ -72,7 +72,7 @@ public class DbHistoryTest {
         }
     }
 
-    public void dbInsert() {
+    public void dbInsert(HistoryDto historyDto) {
         String url = "jdbc:mariadb://localhost:3306/testdb2";
         String dbUserId = "root";
         String dbPassword = "0211";
@@ -88,7 +88,6 @@ public class DbHistoryTest {
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
 
-        String hIdValue = "";
         String xValue = "";
         String yValue = "";
 
@@ -96,13 +95,12 @@ public class DbHistoryTest {
         try {
             connection = DriverManager.getConnection(url, dbUserId, dbPassword);
 
-            String sql = " insert into history (H_ID, X, Y, H_DATE) " +
-                    " values (?, ?, ?, now()) ";
+            String sql = " insert into history (X, Y, H_DATE) " +
+                    " values (?, ?, now()) ";
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, hIdValue);
-            preparedStatement.setString(2, xValue);
-            preparedStatement.setString(3, yValue);
+            preparedStatement.setString(1, historyDto.getX());
+            preparedStatement.setString(2, historyDto.getY());
 
             int affected = preparedStatement.executeUpdate();
 
