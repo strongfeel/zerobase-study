@@ -18,23 +18,23 @@
 <body>
     <form action="history.jsp" method="post">
         <table>
-            <td>LAT: </td>
             <td>
-                <input type="text" id="X" value="0.0">
+                LAT:<input type="text" id="X" value="0.0">
             </td>
-            <td>, LNT: </td>
             <td>
-                <input type="text" id="Y" value="0.0">
+                , LNT:<input type="text" id="Y" value="0.0">
+            </td>
+            <td>
                 <input id="btnStart" type="button" value="내 위치 가져오기">
-                <input id="wifiInfo" type="submit" value="근처 WIFI 정보 가져오기">
+            </td>
+            <td>
+                <input id="wifiInfo" type="button" value="근처 WIFI 정보 가져오기">
             </td>
         </table>
     </form>
 </body>
 <script>
     $(function() {
-        // Geolocation API에 액세스할 수 있는지를 확인
-        if (navigator.geolocation) {
             //위치 정보를 버튼 누를때  얻기
             $('#btnStart').click(function() {
             var id = navigator.geolocation.watchPosition(
@@ -45,9 +45,7 @@
                     console.log(id);// 경도
                 });
             });
-        } else {
-            alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
-        }
+
     });
 </script>
 <body>
