@@ -47,7 +47,6 @@ public class DbHistoryService {
                 historyDto.setH_ID(Integer.parseInt(hId));
                 historyDto.setX(x);
                 historyDto.setY(y);
-                historyDto.setH_DATE(hDate);
 
                 historyDtoList.add(historyDto);
 

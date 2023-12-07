@@ -15,32 +15,42 @@
     <a href="index.jsp">홈</a> | <a href="history.jsp">위치 히스토리 목록</a> | <a href="load-wifi.jsp">Open API 와이파이 정보 가져오기</a>
 </body>
 <script src="http://code.jquery.com/jquery-1.11.0.js"></script>
+<body>
+    <form action="history.jsp" method="post">
+        <table>
+            <td>LAT: </td>
+            <td>
+                <input type="text" id="X" value="0.0">
+            </td>
+            <td>, LNT: </td>
+            <td>
+                <input type="text" id="Y" value="0.0">
+                <input id="btnStart" type="button" value="내 위치 가져오기">
+                <input id="wifiInfo" type="submit" value="근처 WIFI 정보 가져오기">
+            </td>
+        </table>
+    </form>
+</body>
 <script>
     $(function() {
         // Geolocation API에 액세스할 수 있는지를 확인
         if (navigator.geolocation) {
-            //위치 정보를 정기적으로 얻기
+            //위치 정보를 버튼 누를때  얻기
+            $('#btnStart').click(function() {
             var id = navigator.geolocation.watchPosition(
                 function(pos) {
-                    $('#latitude').html(pos.coords.latitude);     // 위도
-                    $('#longitude').html(pos.coords.longitude); // 경도
+                    $('#X').val(pos.coords.latitude);
+                    console.log(id);// 위도
+                    $('#Y').val(pos.coords.longitude);
+                    console.log(id);// 경도
                 });
-
-            // 버튼 클릭으로 감시를 중지
-            $('#btnStop').click(function() {
-                navigator.geolocation.clearWatch(id);
             });
         } else {
             alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
         }
-
     });
 </script>
-</head>
 <body>
-<ul>
-    <li>LAT:<span id="latitude"></span></li><li>, LNT:<span id="longitude"></span></li>
-</ul>
-<input id="btnStop" type="button" value="감시를 끝낸다" />
+
 </body>
 </html>
