@@ -19,16 +19,16 @@
     <form action="history.jsp" method="post">
         <table>
             <td>
-                LAT:<input type="text" id="X" value="0.0">
+                LAT:<input type="text" name="X" id="X" value="0.0">
             </td>
             <td>
-                , LNT:<input type="text" id="Y" value="0.0">
+                , LNT:<input type="text" name="Y" id ="Y" value="0.0">
             </td>
             <td>
                 <input id="btnStart" type="button" value="내 위치 가져오기">
             </td>
             <td>
-                <input id="wifiInfo" type="button" value="근처 WIFI 정보 가져오기">
+                <input id="wifiInfo" type="submit" value="근처 WIFI 정보 가져오기">
             </td>
         </table>
     </form>
@@ -38,10 +38,10 @@
             //위치 정보를 버튼 누를때  얻기
             $('#btnStart').click(function() {
             var id = navigator.geolocation.watchPosition(
-                function(pos) {
-                    $('#X').val(pos.coords.latitude);
+                function(position) {
+                    $('#X').val(position.coords.latitude);
                     console.log(id);// 위도
-                    $('#Y').val(pos.coords.longitude);
+                    $('#Y').val(position.coords.longitude);
                     console.log(id);// 경도
                 });
             });
