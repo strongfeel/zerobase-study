@@ -96,8 +96,6 @@
 </table>
 </body>
 <body>
-    <tr>
-        <span style="border: 1px solid black">위치정보를 입력한 후에 조회해 주세요.</span>
-    </tr>
+    위치정보를 입력한 후에 조회해 주세요.
 </body>
 </html>
