@@ -1,4 +1,4 @@
-package com.example.zerobasestudy.db;
+package com.example.zerobasestudy;
 
 import lombok.Getter;
 import lombok.Setter;

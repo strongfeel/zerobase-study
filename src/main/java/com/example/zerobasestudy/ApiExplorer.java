@@ -1,4 +1,4 @@
-package com.example.zerobasestudy.api;
+package com.example.zerobasestudy;
 
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;

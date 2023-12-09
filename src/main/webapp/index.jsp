@@ -40,8 +40,10 @@
 </head>
 <body>
 <h1>와이파이 정보 구하기</h1>
+
 <a href="historyMain.jsp">홈</a> | <a href="historyMain.jsp">위치 히스토리 목록</a> | <a href="load-wifi.jsp">Open API 와이파이 정보 가져오기</a><br>
-<form action="historyInsert.jsp" typeof="get">
+
+    <form action="historyInsert.jsp" typeof="get">
         <td>
             LAT:<input type="text" name="X" id="X" value="0.0">
         </td>
@@ -52,10 +54,11 @@
             <input id="btnStart" type="button" value="내 위치 가져오기">
         </td>
         <td>
-            <input id="wifiInfo" type="submit" value="근처 WIFI 정보 가져오기">
+            <input id="wifiData" type="submit" value="근처 WIFI 정보 가져오기">
         </td>
     </form>
 </body>
+
 <script src="http://code.jquery.com/jquery-1.11.0.js"></script>
 <script>
     $(function() {
@@ -72,6 +75,7 @@
 
     });
 </script>
+
 <body>
 <table>
     <tr>

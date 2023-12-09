@@ -1,4 +1,4 @@
-package com.example.zerobasestudy.api;
+package com.example.zerobasestudy;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

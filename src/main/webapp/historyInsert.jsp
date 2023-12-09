@@ -7,8 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*"%>
-<%@ page import="com.example.zerobasestudy.db.HistoryDto" %>
-<%@ page import="com.example.zerobasestudy.db.HistoryDao" %>
+<%@ page import="com.example.zerobasestudy.HistoryDto" %>
+<%@ page import="com.example.zerobasestudy.HistoryDao" %>
 <% request.setCharacterEncoding("utf-8");%>
 <html>
 <head>
@@ -27,8 +27,13 @@
 
     HistoryDao dao = new HistoryDao();
     int res = dao.insert(dto);
-    response.sendRedirect("index.jsp");
+    if (res > 0) {
 %>
-
+<script type="text/javascript">
+    location.href = "index.jsp";
+</script>
+<%
+    }
+%>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.example.zerobasestudy.db;
+package com.example.zerobasestudy;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -156,7 +156,7 @@ public class HistoryDao {
     }
 
     //히스토리 삭제
-    public static void delete(HistoryDto historyDto) {
+    public int delete(int historyDto) {
         String url = "jdbc:mariadb://localhost:3306/testdb2";
         String dbUserId = "root";
         String dbPassword = "0211";
@@ -171,6 +171,7 @@ public class HistoryDao {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
+        int affected = 0;
 
         try {
             connection = DriverManager.getConnection(url, dbUserId, dbPassword);
@@ -179,9 +180,9 @@ public class HistoryDao {
                     " where H_ID = ? ";
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, String.valueOf(historyDto.getH_ID()));
+            preparedStatement.setString(1, String.valueOf(historyDto));
 
-            int affected = preparedStatement.executeUpdate();
+            affected = preparedStatement.executeUpdate();
 
             if (affected > 0) {
                 System.out.println(" 삭제 성공 ");
@@ -218,6 +219,7 @@ public class HistoryDao {
                 throw new RuntimeException(e);
             }
         }
+        return affected;
     }
 
 }

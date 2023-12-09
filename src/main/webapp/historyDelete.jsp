@@ -7,47 +7,29 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*"%>
+<%@ page import="com.example.zerobasestudy.HistoryDao" %>
 <% request.setCharacterEncoding("utf-8");%>
 
 <%
     int H_ID = Integer.parseInt(request.getParameter("H_ID"));
 
-    Connection conn = null;
-    PreparedStatement pstmt = null;
-    String str = "";
+    HistoryDao dao = new HistoryDao();
+    int res = dao.delete(H_ID);
 
-    String jdbcUrl = "jdbc:mariadb://localhost:3306/testdb2";
-    String dbId = "root";
-    String dbPass = "0211";
-
-    try {
-        Class.forName("org.mariadb.jdbc.Driver");
-    } catch (ClassNotFoundException e) {
-        throw new RuntimeException(e);
-    }
-
-    try{
-        conn = DriverManager.getConnection(jdbcUrl, dbId, dbPass);
-
-        String sql = " delete from history " +
-                " where H_ID = ? ";
-
-        pstmt=conn.prepareStatement(sql);
-
-        pstmt.setInt(1,H_ID);
-
-        response.sendRedirect("index.jsp");
-
-        System.out.print(pstmt);
-
-    }catch(Exception e){
-        e.printStackTrace();
-        str="실패했습니다";
-    }finally{
-        if(pstmt != null)
-            try{pstmt.close();}catch(SQLException sqle){}
-        if(conn != null)
-            try{conn.close();}catch(SQLException sqle){}
+    if (res > 0) {
+%>
+    <script type="text/javascript">
+        alert("히스토리 삭제 성공");
+        location.href = "historyMain.jsp";
+    </script>
+<%
+    } else {
+%>
+<script type="text/javascript">
+    alert("히스토리 삭제 실패");
+    location.href = "historyMain.jsp";
+</script>
+<%
     }
 %>
 <!DOCTYPE html>

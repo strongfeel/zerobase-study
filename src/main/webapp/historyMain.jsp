@@ -1,5 +1,5 @@
-<%@ page import="com.example.zerobasestudy.db.HistoryDao" %>
-<%@ page import="com.example.zerobasestudy.db.HistoryDto" %>
+<%@ page import="com.example.zerobasestudy.HistoryDao" %>
+<%@ page import="com.example.zerobasestudy.HistoryDto" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: StrongFeel
@@ -65,7 +65,7 @@
     <td><%=list.get(i).getX()%></td>
     <td><%=list.get(i).getY()%></td>
     <td><%=list.get(i).getH_DATE()%></td>
-    <td><a href="">삭제</a> </td>
+    <td><a href="historyDelete.jsp?H_ID=<%= list.get(i).getH_ID()%>">삭제</a> </td>
   </tr>
   <%
     }
