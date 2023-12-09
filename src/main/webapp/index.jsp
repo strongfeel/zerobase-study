@@ -40,21 +40,21 @@
 </head>
 <body>
 <h1>와이파이 정보 구하기</h1>
-<form action="historyPro.jsp" method="post">
-    <a href="index.jsp">홈</a> | <input type="submit" value="위치 히스토리 목록" style="border: none; background: transparent;"> | <a href="load-wifi.jsp">Open API 와이파이 정보 가져오기</a><br>
-    <td>
-        LAT:<input type="text" name="X" id="X" value="0.0">
-    </td>
-    <td>
-        , LNT:<input type="text" name="Y" id ="Y" value="0.0">
-    </td>
-    <td>
-        <input id="btnStart" type="button" value="내 위치 가져오기">
-    </td>
-    <td>
-        <input id="wifiInfo" type="button" value="근처 WIFI 정보 가져오기">
-    </td>
-</form>
+<a href="historyMain.jsp">홈</a> | <a href="historyMain.jsp">위치 히스토리 목록</a> | <a href="load-wifi.jsp">Open API 와이파이 정보 가져오기</a><br>
+<form action="historyInsert.jsp" typeof="get">
+        <td>
+            LAT:<input type="text" name="X" id="X" value="0.0">
+        </td>
+        <td>
+            , LNT:<input type="text" name="Y" id ="Y" value="0.0">
+        </td>
+        <td>
+            <input id="btnStart" type="button" value="내 위치 가져오기">
+        </td>
+        <td>
+            <input id="wifiInfo" type="submit" value="근처 WIFI 정보 가져오기">
+        </td>
+    </form>
 </body>
 <script src="http://code.jquery.com/jquery-1.11.0.js"></script>
 <script>
@@ -96,6 +96,6 @@
 </table>
 </body>
 <body>
-    위치정보를 입력한 후에 조회해 주세요.
+
 </body>
 </html>

@@ -4,9 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DbHistoryService {
-
-    public List<HistoryDto> historyList() {
+public class HistoryDao {
+    //히스토리 출력
+    public List<HistoryDto> selectAll() {
 
         List<HistoryDto> historyDtoList = new ArrayList<>();
 
@@ -29,7 +29,7 @@ public class DbHistoryService {
             connection = DriverManager.getConnection(url, dbUserId, dbPassword);
 
             String sql = " select H_ID, X, Y, H_DATE " +
-                    " form history ";
+                    " from history ";
 
             preparedStatement = connection.prepareStatement(sql);
             //preparedStatement.setString(1, hIdValue); //SELECT
@@ -47,6 +47,7 @@ public class DbHistoryService {
                 historyDto.setH_ID(Integer.parseInt(hId));
                 historyDto.setX(x);
                 historyDto.setY(y);
+                historyDto.setH_DATE(Timestamp.valueOf(hDate));
 
                 historyDtoList.add(historyDto);
 
@@ -86,7 +87,8 @@ public class DbHistoryService {
         return historyDtoList;
     }
 
-    public void dbInsert(HistoryDto historyDto) { //히스토리 데이터 추가
+    //히스토리 입력
+    public int insert(HistoryDto historyDto) { //히스토리 데이터 추가
         String url = "jdbc:mariadb://localhost:3306/testdb2";
         String dbUserId = "root";
         String dbPassword = "0211";
@@ -101,6 +103,7 @@ public class DbHistoryService {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
+        int affected = 0;
 
         try {
             connection = DriverManager.getConnection(url, dbUserId, dbPassword);
@@ -112,7 +115,7 @@ public class DbHistoryService {
             preparedStatement.setString(1, historyDto.getX());
             preparedStatement.setString(2, historyDto.getY());
 
-            int affected = preparedStatement.executeUpdate();
+            affected = preparedStatement.executeUpdate();
 
             if (affected > 0) {
                 System.out.println(" 저장 성공 ");
@@ -149,9 +152,11 @@ public class DbHistoryService {
                 throw new RuntimeException(e);
             }
         }
+        return affected;
     }
 
-    public void dbDelete(HistoryDto historyDto) {
+    //히스토리 삭제
+    public static void delete(HistoryDto historyDto) {
         String url = "jdbc:mariadb://localhost:3306/testdb2";
         String dbUserId = "root";
         String dbPassword = "0211";
