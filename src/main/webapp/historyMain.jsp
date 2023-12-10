@@ -42,13 +42,15 @@
 </head>
 <body>
 <h1>위치 히스토리 목록</h1>
-<a href="index.jsp">홈</a> | <a href="history.jsp">위치 히스토리 목록</a> | <a href="load-wifi.jsp">Open API 와이파이 정보 가져오기</a>
+<a href="controller.jsp?command=main">홈</a> | <a href="controller.jsp?command=history">위치 히스토리 목록</a> | <a href="load-wifi.jsp">Open API 와이파이 정보 가져오기</a>
 </body>
-<%
-  HistoryDao dao = new HistoryDao();
-  List<HistoryDto> list = dao.selectAll();
-%>
 <body>
+<%
+  List<HistoryDto> list = (List<HistoryDto>)request.getAttribute("historyList");
+  /*HistoryDao dao = new HistoryDao();
+  List<HistoryDto> list = dao.selectAll();*/
+%>
+<form action="">
 <table>
   <tr>
     <th>ID</th>
@@ -58,18 +60,20 @@
     <th>비고</th>
   </tr>
   <%
-    for (int i = 0; i < list.size(); i++){
+    for (HistoryDto historyDto : list) {
+    /*for (int i = 0; i < list.size(); i++){*/
   %>
   <tr>
-    <td><%=list.get(i).getH_ID() %></td>
-    <td><%=list.get(i).getX()%></td>
-    <td><%=list.get(i).getY()%></td>
-    <td><%=list.get(i).getH_DATE()%></td>
-    <td><a href="historyDelete.jsp?H_ID=<%= list.get(i).getH_ID()%>">삭제</a> </td>
+    <td><%=historyDto.getH_ID() %></td>
+    <td><%=historyDto.getX()%></td>
+    <td><%=historyDto.getY()%></td>
+    <td><%=historyDto.getH_DATE()%></td>
+    <td><a href="controller.jsp?command=historyDelete&H_ID=<%= historyDto.getH_ID()%>">삭제</a></td>
   </tr>
   <%
     }
   %>
 </table>
+</form>
 </body>
 </html>
