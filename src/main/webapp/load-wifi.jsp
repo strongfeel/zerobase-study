@@ -1,5 +1,6 @@
-<%@ page import="com.example.zerobasestudy.ApiExplorer" %>
-<%@ page import="com.example.zerobasestudy.WifiInfo" %><%--
+<%@ page import="com.example.zerobasestudy.WifiInfo" %>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="com.example.zerobasestudy.WifiDto" %><%--
   Created by IntelliJ IDEA.
   User: StrongFeel
   Date: 2023-12-04
@@ -15,9 +16,10 @@
 <%
     WifiInfo wifiInfo = new WifiInfo();
     int result = wifiInfo.TotalCnt();
+
     out.print(result + "개의 WIFI 정보를 정상적으로 저장하였습니다.");
 %>
 <br>
-<a href="index.jsp" style="text-align: center">홈 으로 가기</a>
+<a href="index.jsp">홈 으로 가기</a>
 </body>
 </html>

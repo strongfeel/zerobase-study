@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.sql.SQLOutput;
 
 
 public class WifiInfo {
@@ -20,7 +21,7 @@ public class WifiInfo {
         JSONObject result = null;
         StringBuilder sb = new StringBuilder();
         int start = 1;
-        int end = 20;
+        int end = 1;
         String baseUrl = "http://openapi.seoul.go.kr:8088/" + KEY + "/" +
                 "json/TbPublicWifiInfo/"+ start + "/"+end+"/";
 
@@ -105,11 +106,28 @@ public class WifiInfo {
             JSONObject data = (JSONObject) result.get("TbPublicWifiInfo");
             JSONArray array = (JSONArray) data.get("row");
 
-            JSONObject tmp;
+            WifiDto wifiDto = new WifiDto();
 
             for(int i = 0; i<array.size(); i++) {
-                tmp = (JSONObject) array.get(i);
-                System.out.println((String) result.get("X_SWIFI_MGR_NO")); // 가져오고자 하는 인자를 작성하면 됨.
+                JSONObject tmp = (JSONObject) array.get(i);
+                System.out.println((String) result.get("X_SWIFI_MGR_NO"));// 가져오고자 하는 인자를 작성하면 됨.
+
+                tmp.get("X_SWIFI_MGR_NO").toString();
+                tmp.get("X_SWIFI_WRDOFC").toString();
+                tmp.get("X_SWIFI_MAIN_NM").toString();
+                tmp.get("X_SWIFI_ADRES1").toString();
+                tmp.get("X_SWIFI_ADRES2").toString();
+                tmp.get("X_SWIFI_INSTL_FLOOR").toString();
+                tmp.get("X_SWIFI_INSTL_TY").toString();
+                tmp.get("X_SWIFI_INSTL_MBY").toString();
+                tmp.get("X_SWIFI_SVC_SE").toString();
+                tmp.get("X_SWIFI_CMCWR").toString();
+                tmp.get("X_SWIFI_CNSTC_YEAR").toString();
+                tmp.get("X_SWIFI_INOUT_DOOR").toString();
+                tmp.get("X_SWIFI_REMARS3").toString();
+                tmp.get("LAT").toString();
+                tmp.get("LNT").toString();
+                tmp.get("WORK_DTTM").toString();
                 total++;
             }
         }

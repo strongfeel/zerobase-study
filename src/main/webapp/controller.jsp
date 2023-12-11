@@ -1,7 +1,16 @@
-<%@ page import="com.example.zerobasestudy.HistoryDao" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.zerobasestudy.HistoryDto" %>
-<%@ page import="java.sql.*" %><%--
+<%@ page import="java.sql.*" %>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="java.io.IOException" %>
+<%@ page import="java.net.URL" %>
+<%@ page import="java.io.BufferedReader" %>
+<%@ page import="java.io.InputStreamReader" %>
+<%@ page import="org.json.simple.parser.JSONParser" %>
+<%@ page import="org.json.simple.JSONObject" %>
+<%@ page import="org.json.simple.JSONArray" %>
+<%@ page import="java.net.HttpURLConnection" %>
+<%@ page import="com.example.zerobasestudy.*" %>
+<%@ page import="org.json.simple.parser.ParseException" %><%--
   Created by IntelliJ IDEA.
   User: StrongFeel
   Date: 2023-12-10
@@ -68,6 +77,9 @@
         </script>
 <%
         }
+    } else if (command.equals("wifiSave")) {
+
+        pageContext.forward("load-wifi.jsp");
     }
 %>
 

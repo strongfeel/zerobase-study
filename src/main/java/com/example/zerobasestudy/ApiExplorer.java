@@ -12,7 +12,7 @@ public class ApiExplorer {
         StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088/756f787775736b7037376943465354/json/TbPublicWifiInfo/1/20/"); /*URL*/
         urlBuilder.append("/" +  URLEncoder.encode("756f787775736b7037376943465354","UTF-8") ); /*인증키 (sample사용시에는 호출시 제한됩니다.)*/
         urlBuilder.append("/" +  URLEncoder.encode("json","UTF-8") ); /*요청파일타입 (xml,xmlf,xls,json) */
-        urlBuilder.append("/" + URLEncoder.encode("wifi","UTF-8")); /*서비스명 (대소문자 구분 필수입니다.)*/
+        urlBuilder.append("/" + URLEncoder.encode("TbPublicWifiInfo","UTF-8")); /*서비스명 (대소문자 구분 필수입니다.)*/
         urlBuilder.append("/" + URLEncoder.encode("1","UTF-8")); /*요청시작위치 (sample인증키 사용시 5이내 숫자)*/
         urlBuilder.append("/" + URLEncoder.encode("20","UTF-8")); /*요청종료위치(sample인증키 사용시 5이상 숫자 선택 안 됨)*/
         // 상위 5개는 필수적으로 순서바꾸지 않고 호출해야 합니다.
@@ -23,7 +23,7 @@ public class ApiExplorer {
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/xml");
+        conn.setRequestProperty("Content-type", "application/json");
         System.out.println("Response code: " + conn.getResponseCode()); /* 연결 자체에 대한 확인이 필요하므로 추가합니다.*/
         BufferedReader rd;
 
@@ -33,6 +33,7 @@ public class ApiExplorer {
         } else {
             rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
         }
+
         StringBuilder sb = new StringBuilder();
         String line;
         while ((line = rd.readLine()) != null) {
@@ -40,6 +41,7 @@ public class ApiExplorer {
         }
         rd.close();
         conn.disconnect();
+
         System.out.println(sb.toString());
     }
 }

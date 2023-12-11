@@ -1,12 +1,6 @@
 <%@ page import="com.example.zerobasestudy.HistoryDao" %>
 <%@ page import="com.example.zerobasestudy.HistoryDto" %>
-<%@ page import="java.util.List" %><%--
-  Created by IntelliJ IDEA.
-  User: StrongFeel
-  Date: 2023-12-09
-  Time: 오후 1:35
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
