@@ -15,15 +15,16 @@
 
     HistoryDao dao = new HistoryDao();
 
+    // 홈 버튼 누를떄
     if (command.equals("main")){
         pageContext.forward("index.jsp");
-
+    // 히스토리 버튼 눌렀을떄
     } else if (command.equals("history")){
         List<HistoryDto> list = dao.selectAll();
         request.setAttribute("historyList", list);
         
         pageContext.forward("historyMain.jsp");
-
+    // 좌표 히스토리 추가
     } else if (command.equals("historyInsert")) {
         String X = request.getParameter("X");
         String Y = request.getParameter("Y");
@@ -43,6 +44,7 @@
 </script>
 <%
         }
+    // 히스토리 삭제
     } else if (command.equals("historyDelete")) {
         int H_ID = Integer.parseInt(request.getParameter("H_ID"));
 
@@ -64,6 +66,7 @@
         </script>
 <%
         }
+    // 와이파이 데이터 불러 들이기
     } else if (command.equals("wifiSave")) {
         WifiInfo wifiInfo = new WifiInfo();
         wifiInfo.AddWifi();
