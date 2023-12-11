@@ -87,4 +87,137 @@ public class WifiDao{
             }
         }
     }
+
+    public int insertDist(WifiDto wifiDto) { //히스토리 데이터 추가
+        String url = "jdbc:mariadb://localhost:3306/testdb2";
+        String dbUserId = "root";
+        String dbPassword = "0211";
+
+
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        int affected = 0;
+
+        try {
+            connection = DriverManager.getConnection(url, dbUserId, dbPassword);
+
+            String sql = " insert into public_wifi_info (Dist) " +
+                    " values (?) ";
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, String.valueOf(wifiDto.getDIST()));
+
+            affected = preparedStatement.executeUpdate();
+
+            if (affected > 0) {
+                System.out.println(" 저장 성공 ");
+            } else {
+                System.out.println(" 저장 실패 ");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return affected;
+    }
+
+    public int updateDist(WifiDto wifiDto) {
+        String url = "jdbc:mariadb://localhost:3306/testdb2";
+        String dbUserId = "root";
+        String dbPassword = "0211";
+
+
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        int affected = 0;
+
+        try {
+            connection = DriverManager.getConnection(url, dbUserId, dbPassword);
+
+            String sql = " update history set DIST=?, " +
+                    " where X_SWIFI_MGR_NO=? ";
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, String.valueOf(wifiDto.getDIST()));
+            preparedStatement.setString(2, wifiDto.getX_SWIFI_MGR_NO());
+
+            affected = preparedStatement.executeUpdate();
+
+            if (affected > 0) {
+                System.out.println(" 업데이트 성공 ");
+            } else {
+                System.out.println(" 업데이트 실패 ");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return affected;
+    }
 }

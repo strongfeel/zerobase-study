@@ -3,6 +3,7 @@ package com.example.zerobasestudy;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.security.PrivateKey;
 import java.time.Year;
 
 @Getter
@@ -24,13 +25,14 @@ public class WifiDto {
     private String LAT;
     private String LNT;
     private String WORK_DTTM;
+    private Double DIST;
 
 
     public WifiDto() {
         super();
     }
 
-    public WifiDto(String X_SWIFI_MGR_NO, String X_SWIFI_WRDOFC, String X_SWIFI_MAIN_NM, String X_SWIFI_ADRES1, String X_SWIFI_ADRES2, String X_SWIFI_INSTL_FLOOR, String X_SWIFI_INSTL_TY, String X_SWIFI_INSTL_MBY, String X_SWIFI_SVC_SE, String X_SWIFI_CMCWR, String X_SWIFI_CNSTC_YEAR, String X_SWIFI_INOUT_DOOR, String X_SWIFI_REMARS3, String LAT, String LNT, String WORK_DTTM) {
+    public WifiDto(String X_SWIFI_MGR_NO, String X_SWIFI_WRDOFC, String X_SWIFI_MAIN_NM, String X_SWIFI_ADRES1, String X_SWIFI_ADRES2, String X_SWIFI_INSTL_FLOOR, String X_SWIFI_INSTL_TY, String X_SWIFI_INSTL_MBY, String X_SWIFI_SVC_SE, String X_SWIFI_CMCWR, String X_SWIFI_CNSTC_YEAR, String X_SWIFI_INOUT_DOOR, String X_SWIFI_REMARS3, String LAT, String LNT, String WORK_DTTM, Double DIST) {
         super();
         this.X_SWIFI_MGR_NO = X_SWIFI_MGR_NO;
         this.X_SWIFI_WRDOFC = X_SWIFI_WRDOFC;
@@ -48,7 +50,6 @@ public class WifiDto {
         this.LAT = LAT;
         this.LNT = LNT;
         this.WORK_DTTM = WORK_DTTM;
+        this.DIST = DIST;
     }
-
-
 }
