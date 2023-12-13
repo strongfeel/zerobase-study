@@ -45,6 +45,7 @@
 
     <form action="controller.jsp" method="post">
         <input type="hidden" name="command" value="historyInsert">
+        <input type="hidden" name="command" value="wifiDistance">
         <td>
             LAT:<input type="text" name="X" id="X" value="0.0">
         </td>

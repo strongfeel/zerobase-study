@@ -4,6 +4,7 @@
 <%@ page import="org.json.simple.parser.JSONParser" %>
 <%@ page import="org.json.simple.JSONArray" %>
 <%@ page import="org.json.simple.JSONObject" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -68,9 +69,30 @@
         }
     // 와이파이 데이터 불러 들이기
     } else if (command.equals("wifiSave")) {
-        WifiInfo wifiInfo = new WifiInfo();
-        wifiInfo.AddWifi();
+        /*WifiInfo wifiInfo = new WifiInfo();
+        wifiInfo.AddWifi();*/
         pageContext.forward("load-wifi.jsp");
+    //와이파이 거리 저장
+    } else if (command.equals("wifiDistance")) {
+        WifiDto wifiDto = new WifiDto();
+        WifiDao wifiDao = new WifiDao();
+        Distance distance = new Distance();
+
+        Double getX = Double.valueOf(request.getParameter("X"));
+        Double getY = Double.valueOf(request.getParameter("Y"));
+
+        ArrayList<WifiDto> result = wifiDao.wifiList();
+        for (WifiDto wifiDto1 : result) {
+            String X_SWIFI_MGR_NO = wifiDto1.getX_SWIFI_MGR_NO();
+            Double lat = Double.valueOf(wifiDto1.getLAT());
+            Double lnt = Double.valueOf(wifiDto1.getLNT());
+
+            Double WIFIDIST = distance.getDistance(getX, lat, getY, lnt);
+
+            wifiDao.updateDist(X_SWIFI_MGR_NO, WIFIDIST);
+        }
+
+        pageContext.forward("index.jsp");
     }
 %>
 
