@@ -25,27 +25,7 @@
         request.setAttribute("historyList", list);
         
         pageContext.forward("historyMain.jsp");
-    // 좌표 히스토리 추가
-    } else if (command.equals("historyInsert")) {
-        String X = request.getParameter("X");
-        String Y = request.getParameter("Y");
-        Timestamp H_DATE = new Timestamp(System.currentTimeMillis());
-
-        HistoryDto dto = new HistoryDto();
-        dto.setX(X);
-        dto.setY(Y);
-        dto.setH_DATE(H_DATE);
-
-        int res = dao.insert(dto);
-
-        if (res > 0) {
-%>
-<script type="text/javascript">
-    location.href = "controller.jsp?command=main&LAT=<%= dto.getX()%>&LNT=<%= dto.getY()%>";
-</script>
-<%
-        }
-    // 히스토리 삭제
+        // 히스토리 삭제
     } else if (command.equals("historyDelete")) {
         int H_ID = Integer.parseInt(request.getParameter("H_ID"));
 
@@ -69,12 +49,23 @@
         }
     // 와이파이 데이터 불러 들이기
     } else if (command.equals("wifiSave")) {
-        /*WifiInfo wifiInfo = new WifiInfo();
-        wifiInfo.AddWifi();*/
+        WifiInfo wifiInfo = new WifiInfo();
+        wifiInfo.AddWifi();
         pageContext.forward("load-wifi.jsp");
     //와이파이 거리 저장
     } else if (command.equals("wifiDistance")) {
-        WifiDto wifiDto = new WifiDto();
+
+        String X = request.getParameter("X");
+        String Y = request.getParameter("Y");
+        Timestamp H_DATE = new Timestamp(System.currentTimeMillis());
+
+        HistoryDto dto = new HistoryDto();
+        dto.setX(X);
+        dto.setY(Y);
+        dto.setH_DATE(H_DATE);
+
+        dao.insert(dto);
+
         WifiDao wifiDao = new WifiDao();
         Distance distance = new Distance();
 
@@ -92,7 +83,7 @@
             wifiDao.updateDist(X_SWIFI_MGR_NO, WIFIDIST);
         }
 
-        pageContext.forward("index.jsp");
+        pageContext.forward("wifiData.jsp");
     }
 %>
 

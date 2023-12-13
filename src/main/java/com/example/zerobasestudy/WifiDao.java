@@ -315,7 +315,7 @@ public class WifiDao{
             throw new RuntimeException(e);
         }
 
-        String sql = "SELECT * FROM public_wifi_info ";
+        String sql = " SELECT * FROM public_wifi_info ";
         ArrayList<WifiDto> arrWifi = new ArrayList<>();
 
         try {
@@ -328,6 +328,59 @@ public class WifiDao{
                 wifiDto.setX_SWIFI_MGR_NO(rs.getString(1));
                 wifiDto.setLAT(rs.getString(14));
                 wifiDto.setLNT(rs.getString(15));
+                arrWifi.add(wifiDto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return arrWifi;
+    }
+
+    public ArrayList<WifiDto> wifiAllList() {
+
+        Connection conn;
+        PreparedStatement pstm;
+        ResultSet rs ;
+
+        String url = "jdbc:mariadb://localhost:3306/testdb2";
+        String dbUserId = "root";
+        String dbPassword = "0211";
+
+
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String sql = " SELECT * FROM public_wifi_info ORDER BY WIFIDIST ASC ";
+        ArrayList<WifiDto> arrWifi = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(url, dbUserId, dbPassword);
+            pstm = conn.prepareStatement(sql);
+            rs = pstm.executeQuery();
+
+            while(rs.next()) {
+                WifiDto wifiDto = new WifiDto();
+                wifiDto.setX_SWIFI_MGR_NO(rs.getString(1));
+                wifiDto.setX_SWIFI_WRDOFC(rs.getString(2));
+                wifiDto.setX_SWIFI_MAIN_NM(rs.getString(3));
+                wifiDto.setX_SWIFI_ADRES1(rs.getString(4));
+                wifiDto.setX_SWIFI_ADRES2(rs.getString(5));
+                wifiDto.setX_SWIFI_INSTL_FLOOR(rs.getString(6));
+                wifiDto.setX_SWIFI_INSTL_TY(rs.getString(7));
+                wifiDto.setX_SWIFI_INSTL_MBY(rs.getString(8));
+                wifiDto.setX_SWIFI_SVC_SE(rs.getString(9));
+                wifiDto.setX_SWIFI_CMCWR(rs.getString(10));
+                wifiDto.setX_SWIFI_CNSTC_YEAR(rs.getString(11));
+                wifiDto.setX_SWIFI_INOUT_DOOR(rs.getString(12));
+                wifiDto.setX_SWIFI_REMARS3(rs.getString(13));
+                wifiDto.setLAT(rs.getString(14));
+                wifiDto.setLNT(rs.getString(15));
+                wifiDto.setWORK_DTTM(rs.getString(16));
+                wifiDto.setWIFIDIST(rs.getDouble(17));
                 arrWifi.add(wifiDto);
             }
         } catch (SQLException e) {

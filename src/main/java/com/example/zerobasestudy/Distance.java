@@ -6,7 +6,7 @@ public class Distance {
         double dist = Math.sin(deg2rad(lat))* Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat))*Math.cos(deg2rad(lat2))*Math.cos(deg2rad(theta));
         dist = Math.acos(dist);
         dist = rad2deg(dist);
-        dist = dist * 60*1.1515*1609.344;
+        dist = dist * 60*1.1515*1.609344;
 
         return dist / 1000;
     }

@@ -1,8 +1,12 @@
-<%--
+<%@ page import="com.example.zerobasestudy.WifiDto" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.zerobasestudy.WifiDao" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Arrays" %><%--
   Created by IntelliJ IDEA.
   User: StrongFeel
-  Date: 2023-12-04
-  Time: 오후 6:27
+  Date: 2023-12-13
+  Time: 오후 6:40
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -64,8 +68,8 @@
 <script src="http://code.jquery.com/jquery-1.11.0.js"></script>
 <script>
     $(function() {
-            //위치 정보를 버튼 누를때  얻기
-            $('#btnStart').click(function() {
+        //위치 정보를 버튼 누를때  얻기
+        $('#btnStart').click(function() {
             var id = navigator.geolocation.watchPosition(
                 function(position) {
                     $('#X').val(position.coords.latitude);
@@ -73,11 +77,12 @@
                     $('#Y').val(position.coords.longitude);
                     console.log(id);// 경도
                 });
-            });
+        });
     });
 </script>
 
 <body>
+    <jsp:useBean id="dao" class="com.example.zerobasestudy.WifiDao"/>
 <table>
     <tr>
         <th>거리(Km)</th>
@@ -98,12 +103,34 @@
         <th>Y좌표</th>
         <th>작업일자</th>
     </tr>
+    <%
+        for (int i = 0; i < 20 && i < dao.wifiAllList().size(); i++){
+    %>
+        <tr>
+            <td><%=dao.wifiAllList().get(i).getWIFIDIST() %></td>
+            <td><%=dao.wifiAllList().get(i).getX_SWIFI_MGR_NO()%></td>
+            <td><%=dao.wifiAllList().get(i).getX_SWIFI_WRDOFC()%></td>
+            <td><a href=""><%=dao.wifiAllList().get(i).getX_SWIFI_MAIN_NM()%></a></td>
+            <td><%=dao.wifiAllList().get(i).getX_SWIFI_ADRES1()%></td>
+            <td><%=dao.wifiAllList().get(i).getX_SWIFI_ADRES2()%></td>
+            <td><%=dao.wifiAllList().get(i).getX_SWIFI_INSTL_FLOOR()%></td>
+            <td><%=dao.wifiAllList().get(i).getX_SWIFI_INSTL_TY()%></td>
+            <td><%=dao.wifiAllList().get(i).getX_SWIFI_INSTL_MBY()%></td>
+            <td><%=dao.wifiAllList().get(i).getX_SWIFI_SVC_SE()%></td>
+            <td><%=dao.wifiAllList().get(i).getX_SWIFI_CMCWR()%></td>
+            <td><%=dao.wifiAllList().get(i).getX_SWIFI_CNSTC_YEAR()%></td>
+            <td><%=dao.wifiAllList().get(i).getX_SWIFI_INOUT_DOOR()%></td>
+            <td><%=dao.wifiAllList().get(i).getX_SWIFI_REMARS3()%></td>
+            <td><%=dao.wifiAllList().get(i).getLAT()%></td>
+            <td><%=dao.wifiAllList().get(i).getLNT()%></td>
+            <td><%=dao.wifiAllList().get(i).getWORK_DTTM()%></td>
+        </tr>
+<%
+    }
+%>
+
 </table>
 </body>
 <body>
-
-<div id="display">
-    위치 정보를 입력한 후에 조회해 주세요.
-</div>
 </body>
 </html>

@@ -112,6 +112,7 @@ public class HistoryDao {
                     " values (?, ?, now()) ";
 
             preparedStatement = connection.prepareStatement(sql);
+
             preparedStatement.setString(1, historyDto.getX());
             preparedStatement.setString(2, historyDto.getY());
 
