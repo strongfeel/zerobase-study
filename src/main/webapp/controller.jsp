@@ -5,7 +5,8 @@
 <%@ page import="org.json.simple.JSONArray" %>
 <%@ page import="org.json.simple.JSONObject" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+        <%@ page language="java" contentType="text/html; charset=utf-8"
+                 pageEncoding="utf-8" %>
 <html>
 <head>
     <title>Title</title>
@@ -27,7 +28,7 @@
         List<HistoryDto> list = dao.selectAll();
         request.setAttribute("historyList", list);
 
-        response.sendRedirect("historyMain.jsp");
+        pageContext.forward("historyMain.jsp");
         // 히스토리 삭제
     } else if (command.equals("historyDelete")) {
         int H_ID = Integer.parseInt(request.getParameter("H_ID"));
@@ -110,10 +111,10 @@
     // 북마크 그룹 관리
     } else if (command.equals("bookmark-group")) {
         BgDao bgDao = new BgDao();
-        List<BgDto> list = bgDao.selectAll();
-        request.setAttribute("bgList", list);
+        List<BgDto> bgDtoList = bgDao.selectAll();
+        request.setAttribute("bgDtoList", bgDtoList);
 
-        response.sendRedirect("bookmarkGroupMain.jsp");
+        pageContext.forward("bookmarkGroupMain.jsp");
     //북마크 삭제
     } else if (command.equals("bgDelete")) {
         int BG_ID = Integer.parseInt(request.getParameter("BG_ID"));
@@ -125,27 +126,55 @@
 %>
         <script type="text/javascript">
             alert("북마크 그룹 삭제 성공");
-            location.href = "controller.jsp?command=bookmarkGroupMain";
+            location.href = "controller.jsp?command=bookmark-group";
         </script>
 <%
         } else {
 %>
         <script type="text/javascript">
             alert("북마크 그룹 삭제 실패");
-            location.href = "controller.jsp?command=bookmarkGroupMain";
+            location.href = "controller.jsp?command=bookmark-group";
         </script>
 <%
         }
 
-        // 와이파이 데이터 불러 들이기
+        // 북마크 데이터 업데이트 페이지
     } else if (command.equals("bgUpdate")) {
+        int BG_ID = Integer.parseInt(request.getParameter("BG_ID"));
+        BgDao bgDao = new BgDao();
+        BgDto bgDto = bgDao.selectOne(BG_ID);
+        request.setAttribute("bgDto", bgDto);
 
+        pageContext.forward("bookmarkGroupUpdate.jsp");
 
+    // 북마크 데이터 업데이트
+    } else if (command.equals("update")) {
+        String BG_NAME = request.getParameter("BG_NAME");
+        String BG_PRI = request.getParameter("BG_PRI");
+
+        int BG_ID = Integer.parseInt(request.getParameter("BG_ID"));
+
+        BgDto bgDto = new BgDto();
+        bgDto.setBG_NAME(BG_NAME);
+        bgDto.setBG_PRI(BG_PRI);
+        bgDto.setBG_ID(BG_ID);
+
+        BgDao bgDao = new BgDao();
+        int res = bgDao.update(bgDto);
+
+        if (res > 0) {
+%>
+        <script type="text/javascript">
+            alert("글 수정 성공");
+            location.href = "controller.jsp?command=bookmark-group";
+        </script>
+<%
+        }
     // 북마크 그룹 추가페이지 요청
     } else if (command.equals("bgInsertPage")) {
-        response.sendRedirect("bgInsert.jsp");
+        response.sendRedirect("bookmarkGroupInsert.jsp");
     // 북마크 그룹 추가하기
-    } else if (command.equals("bgInset")) {
+    } else if (command.equals("bgInsert")) {
         String BG_NAME = request.getParameter("BG_NAME");
         String BG_PRI = request.getParameter("BG_PRI");
 
@@ -154,9 +183,17 @@
         bgDto.setBG_PRI(BG_PRI);
 
         BgDao bgDao = new BgDao();
-        bgDao.insert(bgDto);
+        int res = bgDao.insert(bgDto);
+
+        if (res > 0) {
+%>
+        <script type="text/javascript">
+            alert("북마크 그룹 추가 성공");
+            location.href = "controller.jsp?command=bookmark-group";
+        </script>
+<%
+        }
     }
 %>
-
 </body>
 </html>

@@ -6,7 +6,8 @@
   Time: 오후 3:40
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+         pageEncoding="utf-8" %>
 <html>
 <head>
     <style>
@@ -48,8 +49,9 @@
 </body>
 <body>
 <%
-List<BgDto> list = (List<BgDto>)request.getAttribute("bgList");
+    List<BgDto> bgDtoList = (List<BgDto>)request.getAttribute("bgDtoList");
 %>
+<form action="">
 <table>
     <tr>
         <th>ID</th>
@@ -60,7 +62,7 @@ List<BgDto> list = (List<BgDto>)request.getAttribute("bgList");
         <th>비고</th>
     </tr>
     <%
-        for (BgDto bgDto : list) {
+        for (BgDto bgDto : bgDtoList) {
             /*for (int i = 0; i < list.size(); i++){*/
     %>
     <tr>
@@ -69,11 +71,12 @@ List<BgDto> list = (List<BgDto>)request.getAttribute("bgList");
         <td><%=bgDto.getBG_PRI()%></td>
         <td><%=bgDto.getBG_IN_DATE()%></td>
         <td><%=bgDto.getBG_UPDATE()%></td>
-        <td><td><a href="controller.jsp?command=bgUpdate&BG_ID=<%= bgDto.getBG_ID()%>">수정</a><a href="controller.jsp?command=bgDelete&BG_ID=<%= bgDto.getBG_ID()%>">삭제</a></td>
+        <td><a href="controller.jsp?command=bgUpdate&BG_ID=<%= bgDto.getBG_ID()%>">수정</a> <a href="controller.jsp?command=bgDelete&BG_ID=<%= bgDto.getBG_ID()%>">삭제</a></td>
     </tr>
     <%
         }
     %>
 </table>
+</form>
 </body>
 </html>

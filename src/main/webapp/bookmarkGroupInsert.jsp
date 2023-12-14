@@ -5,7 +5,8 @@
   Time: 오후 4:40
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+         pageEncoding="utf-8" %>
 <html>
 <head>
   <style>
@@ -42,7 +43,7 @@
 <h1>북마크 그룹 추가</h1>
 <a href="controller.jsp?command=main">홈</a> | <a href="controller.jsp?command=history">위치 히스토리 목록</a> | <a href="controller.jsp?command=wifiSave">Open API 와이파이 정보 가져오기</a> | <a href="controller.jsp?command=bookmark">북마크 보기</a> | <a href="controller.jsp?command=bookmark-group">북마크 그룹 관리</a><br>
 </body>
-<form action="controller.jsp" method="post">
+<form action="controller.jsp" method="get">
   <input type="hidden" name="command" value="bgInsert">
   <table>
     <tr>
@@ -54,7 +55,9 @@
       <td><input type="text" name="BG_PRI"></td>
     </tr>
     <tr>
-      <input type="submit" value="추가">
+      <td>
+        <input type="submit" value="추가">
+      </td>
     </tr>
   </table>
 </form>

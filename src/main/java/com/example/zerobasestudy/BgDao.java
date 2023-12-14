@@ -53,7 +53,7 @@ public class BgDao {
 
                 BgDtoList.add(bgDto);
 
-                System.out.println(BG_ID + ", " + BG_NAME + ", " + BG_PRI + ", " + BG_IN_DATE + ", " + BG_UPDATE);
+                /*System.out.println(BG_ID + ", " + BG_NAME + ", " + BG_PRI + ", " + BG_IN_DATE + ", " + BG_UPDATE);*/
             }
 
         } catch (SQLException e) {
@@ -109,8 +109,8 @@ public class BgDao {
         try {
             connection = DriverManager.getConnection(url, dbUserId, dbPassword);
 
-            String sql = " insert into bookmark_group (BG_NAME, BG_PRI, BG_IN_DATE) " +
-                    " values (?, ?, now()) ";
+            String sql = " insert into bookmark_group (BG_NAME, BG_PRI, BG_IN_DATE, BG_UPDATE) " +
+                    " values (?, ?, now(), now()) ";
 
             preparedStatement = connection.prepareStatement(sql);
 
@@ -223,7 +223,7 @@ public class BgDao {
         return affected;
     }
 
-    public int update(String BG_NAME, String BG_PRI) {
+    public int update(BgDto bgDto) {
         String url = "jdbc:mariadb://localhost:3306/testdb2";
         String dbUserId = "root";
         String dbPassword = "0211";
@@ -243,12 +243,13 @@ public class BgDao {
         try {
             connection = DriverManager.getConnection(url, dbUserId, dbPassword);
 
-            String sql = " UPDATE bookmark_group SET BG_PRI = ? WHERE BG_NAME = ? ";
+            String sql = " UPDATE bookmark_group SET BG_NAME = ?, BG_PRI = ?,BG_UPDATE = now() WHERE BG_ID = ? ";
 
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, BG_PRI);
-            preparedStatement.setString(2, BG_NAME);
+            preparedStatement.setString(1, bgDto.getBG_NAME());
+            preparedStatement.setString(2, bgDto.getBG_PRI());
+            preparedStatement.setInt(3, bgDto.getBG_ID());
 
             affected = preparedStatement.executeUpdate();
 
@@ -288,5 +289,71 @@ public class BgDao {
             }
         }
         return affected;
+    }
+
+    public BgDto selectOne(int BG_ID) { //히스토리 데이터 추가
+        String url = "jdbc:mariadb://localhost:3306/testdb2";
+        String dbUserId = "root";
+        String dbPassword = "0211";
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        BgDto bgDto = new BgDto();
+
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            connection = DriverManager.getConnection(url, dbUserId, dbPassword);
+
+            String sql = " SELECT * FROM bookmark_group WHERE BG_ID=? ";
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, BG_ID);
+
+            rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                bgDto.setBG_ID(rs.getInt(1));
+                bgDto.setBG_NAME(rs.getString(2));
+                bgDto.setBG_PRI(rs.getString(3));
+                bgDto.setBG_IN_DATE(rs.getTimestamp(4));
+                bgDto.setBG_UPDATE(rs.getTimestamp(5));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return bgDto;
     }
 }
