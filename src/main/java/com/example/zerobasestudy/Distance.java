@@ -8,7 +8,7 @@ public class Distance {
         dist = rad2deg(dist);
         dist = dist * 60*1.1515*1.609344;
 
-        return dist / 1000;
+        return dist;
     }
 
     //10진수를 radian(라디안)으로 변환

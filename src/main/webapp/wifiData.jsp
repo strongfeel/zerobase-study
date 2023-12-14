@@ -51,10 +51,10 @@
 <form action="controller.jsp" method="post">
     <input type="hidden" name="command" value="wifiDistance">
     <td>
-        LAT:<input type="text" name="X" id="X" value="0.0">
+        LNT:<input type="text" name="X" id="Y" value="0.0">
     </td>
     <td>
-        , LNT:<input type="text" name="Y" id ="Y" value="0.0">
+        , LAT:<input type="text" name="Y" id ="X" value="0.0">
     </td>
     <td>
         <input id="btnStart" type="button" value="내 위치 가져오기">
@@ -72,9 +72,9 @@
         $('#btnStart').click(function() {
             var id = navigator.geolocation.watchPosition(
                 function(position) {
-                    $('#X').val(position.coords.latitude);
+                    $('#Y').val(position.coords.latitude);
                     console.log(id);// 위도
-                    $('#Y').val(position.coords.longitude);
+                    $('#X').val(position.coords.longitude);
                     console.log(id);// 경도
                 });
         });
@@ -110,7 +110,7 @@
             <td><%=dao.wifiAllList().get(i).getWIFIDIST() %></td>
             <td><%=dao.wifiAllList().get(i).getX_SWIFI_MGR_NO()%></td>
             <td><%=dao.wifiAllList().get(i).getX_SWIFI_WRDOFC()%></td>
-            <td><a href=""><%=dao.wifiAllList().get(i).getX_SWIFI_MAIN_NM()%></a></td>
+            <td><a href="controller.jsp?command=selectOne&X_SWIFI_MGR_NO=<%=dao.wifiAllList().get(i).getX_SWIFI_MGR_NO()%>"><%=dao.wifiAllList().get(i).getX_SWIFI_MAIN_NM()%></a></td>
             <td><%=dao.wifiAllList().get(i).getX_SWIFI_ADRES1()%></td>
             <td><%=dao.wifiAllList().get(i).getX_SWIFI_ADRES2()%></td>
             <td><%=dao.wifiAllList().get(i).getX_SWIFI_INSTL_FLOOR()%></td>
@@ -121,8 +121,8 @@
             <td><%=dao.wifiAllList().get(i).getX_SWIFI_CNSTC_YEAR()%></td>
             <td><%=dao.wifiAllList().get(i).getX_SWIFI_INOUT_DOOR()%></td>
             <td><%=dao.wifiAllList().get(i).getX_SWIFI_REMARS3()%></td>
-            <td><%=dao.wifiAllList().get(i).getLAT()%></td>
             <td><%=dao.wifiAllList().get(i).getLNT()%></td>
+            <td><%=dao.wifiAllList().get(i).getLAT()%></td>
             <td><%=dao.wifiAllList().get(i).getWORK_DTTM()%></td>
         </tr>
 <%

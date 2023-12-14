@@ -323,6 +323,7 @@ public class WifiDao{
             pstm = conn.prepareStatement(sql);
             rs = pstm.executeQuery();
 
+
             while(rs.next()) {
                 WifiDto wifiDto = new WifiDto();
                 wifiDto.setX_SWIFI_MGR_NO(rs.getString(1));
