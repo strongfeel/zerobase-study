@@ -18,13 +18,16 @@
 
     // 홈 버튼 누를떄
     if (command.equals("main")) {
-        pageContext.forward("index.jsp");
+        response.sendRedirect("index.jsp");
+
+
+
         // 히스토리 버튼 눌렀을떄
     } else if (command.equals("history")) {
         List<HistoryDto> list = dao.selectAll();
         request.setAttribute("historyList", list);
 
-        pageContext.forward("historyMain.jsp");
+        response.sendRedirect("historyMain.jsp");
         // 히스토리 삭제
     } else if (command.equals("historyDelete")) {
         int H_ID = Integer.parseInt(request.getParameter("H_ID"));
@@ -39,7 +42,7 @@
             location.href = "controller.jsp?command=history";
         </script>
 <%
-} else {
+        } else {
 %>
         <script type="text/javascript">
             alert("히스토리 삭제 실패");
@@ -47,11 +50,15 @@
         </script>
 <%
         }
+
+
+
+
         // 와이파이 데이터 불러 들이기
     } else if (command.equals("wifiSave")) {
         WifiInfo wifiInfo = new WifiInfo();
         wifiInfo.AddWifi();
-        pageContext.forward("load-wifi.jsp");
+        response.sendRedirect("load-wifi.jsp");
         //와이파이 거리 업데이트, 히스토리 저장
     } else if (command.equals("wifiDistance")) {
 
@@ -81,15 +88,73 @@
             Double WIFIDIST = distance.getDistance(getY, getX, lat, lnt);
             wifiDao.updateDist(X_SWIFI_MGR_NO, WIFIDIST);
         }
-        pageContext.forward("wifiData.jsp");
-
+        response.sendRedirect("wifiData.jsp");
+    //와이파이 정보 보여주기
     } else if (command.equals("selectOne")) {
         String X_SWIFI_MGR_NO = request.getParameter("X_SWIFI_MGR_NO");
+
         WifiDao wifiDao = new WifiDao();
         WifiDto wifiDto = wifiDao.selectOne(X_SWIFI_MGR_NO);
+
         request.setAttribute("wifiDto", wifiDto);
 
-        pageContext.forward("selectOne.jsp");
+        response.sendRedirect("selectOne.jsp");
+
+
+
+
+        // 북마크 보기
+    } else if (command.equals("bookmark")) {
+
+
+    // 북마크 그룹 관리
+    } else if (command.equals("bookmark-group")) {
+        BgDao bgDao = new BgDao();
+        List<BgDto> list = bgDao.selectAll();
+        request.setAttribute("bgList", list);
+
+        response.sendRedirect("bookmarkGroupMain.jsp");
+    //북마크 삭제
+    } else if (command.equals("bgDelete")) {
+        int BG_ID = Integer.parseInt(request.getParameter("BG_ID"));
+
+        BgDao bgDao = new BgDao();
+        int res2 = bgDao.delete(BG_ID);
+
+        if (res2 > 0) {
+%>
+        <script type="text/javascript">
+            alert("북마크 그룹 삭제 성공");
+            location.href = "controller.jsp?command=bookmarkGroupMain";
+        </script>
+<%
+        } else {
+%>
+        <script type="text/javascript">
+            alert("북마크 그룹 삭제 실패");
+            location.href = "controller.jsp?command=bookmarkGroupMain";
+        </script>
+<%
+        }
+
+        // 와이파이 데이터 불러 들이기
+    } else if (command.equals("bgUpdate")) {
+
+
+    // 북마크 그룹 추가페이지 요청
+    } else if (command.equals("bgInsertPage")) {
+        response.sendRedirect("bgInsert.jsp");
+    // 북마크 그룹 추가하기
+    } else if (command.equals("bgInset")) {
+        String BG_NAME = request.getParameter("BG_NAME");
+        String BG_PRI = request.getParameter("BG_PRI");
+
+        BgDto bgDto = new BgDto();
+        bgDto.setBG_NAME(BG_NAME);
+        bgDto.setBG_PRI(BG_PRI);
+
+        BgDao bgDao = new BgDao();
+        bgDao.insert(bgDto);
     }
 %>
 

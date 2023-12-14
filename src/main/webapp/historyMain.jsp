@@ -41,8 +41,6 @@
 <body>
 <%
   List<HistoryDto> list = (List<HistoryDto>)request.getAttribute("historyList");
-  /*HistoryDao dao = new HistoryDao();
-  List<HistoryDto> list = dao.selectAll();*/
 %>
 <form action="">
 <table>
