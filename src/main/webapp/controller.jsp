@@ -96,10 +96,9 @@
 
         WifiDao wifiDao = new WifiDao();
         WifiDto wifiDto = wifiDao.selectOne(X_SWIFI_MGR_NO);
-
         request.setAttribute("wifiDto", wifiDto);
 
-        response.sendRedirect("selectOne.jsp");
+        pageContext.forward("selectOne.jsp");
 
 
 
