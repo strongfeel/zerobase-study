@@ -356,4 +356,76 @@ public class BgDao {
         }
         return bgDto;
     }
+
+    public List<BgDto> selectName() {
+
+        List<BgDto> BgDtoList = new ArrayList<>();
+
+        String url = "jdbc:mariadb://localhost:3306/testdb2";
+        String dbUserId = "root";
+        String dbPassword = "0211";
+
+
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+
+        try {
+            connection = DriverManager.getConnection(url, dbUserId, dbPassword);
+
+            String sql = " select BG_NAME " +
+                    " from bookmark_group ";
+
+            preparedStatement = connection.prepareStatement(sql);
+            //preparedStatement.setString(1, hIdValue); //SELECT
+
+            rs = preparedStatement.executeQuery();
+
+            while(rs.next()) {
+
+                String BG_NAME = rs.getString("BG_NAME");
+                BgDto bgDto = new BgDto();
+
+                bgDto.setBG_NAME(BG_NAME);
+                BgDtoList.add(bgDto);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return BgDtoList;
+    }
 }

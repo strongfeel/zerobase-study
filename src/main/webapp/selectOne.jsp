@@ -1,4 +1,6 @@
-<%@ page import="com.example.zerobasestudy.WifiDto" %><%--
+<%@ page import="com.example.zerobasestudy.WifiDto" %>
+<%@ page import="com.example.zerobasestudy.BgDto" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: StrongFeel
   Date: 2023-12-13
@@ -41,17 +43,25 @@
 </head>
 <body>
 <h1>와이파이 정보 구하기</h1>
-
-
-<a href="controller.jsp?command=main">홈</a> | <a href="controller.jsp?command=history">위치 히스토리 목록</a> | <a href="controller.jsp?command=wifiSave">Open API 와이파이 정보 가져오기</a> | <a href="controller.jsp?command=bookmark">북마크 보기</a> | <a href="controller.jsp?command=bookmark-group">북마크 그룹 관리</a><br>
+<a href="controller.jsp?command=main">홈</a> | <a href="controller.jsp?command=history">위치 히스토리 목록</a> | <a href="controller.jsp?command=wifiSave">Open API 와이파이 정보 가져오기</a> | <a href="controller.jsp?command=bookmarkSelect">북마크 보기</a> | <a href="controller.jsp?command=bookmark-group">북마크 그룹 관리</a><br>
 </body>
-<td>
-    <select>
-        <option value="BOOKMARKGROUPNAME"></option>
-    </select>
-</td>
 <body>
 <% WifiDto wifiDto = (WifiDto)request.getAttribute("wifiDto"); %>
+<% List<BgDto> bgDtoList = (List<BgDto>)request.getAttribute("bgDtoList"); %>
+<form action="controller.jsp" method="get">
+    <input type="hidden" name="command" value="bookmarkInsert">
+    <input type="hidden" name="X_SWIFI_MAIN_NM" value="<%= wifiDto.getX_SWIFI_MAIN_NM()%>">
+    <select name="BG_NAME">
+        <option value="none">북마크 그룹 이름 선택</option>
+        <%
+            for (BgDto bgDto : bgDtoList) {
+        %>
+            <option value="<%= bgDto.getBG_NAME()%>"><%= bgDto.getBG_NAME()%></option>
+        <%
+            }
+        %>
+    </select>
+    <input type="submit" value="북마크 추가 하기">
 <table>
     <tr>
         <th>거리(Km)</th>
@@ -122,7 +132,6 @@
         <td><%= wifiDto.getWORK_DTTM()%></td>
     </tr>
 </table>
-</body>
-<body>
+</form>
 </body>
 </html>

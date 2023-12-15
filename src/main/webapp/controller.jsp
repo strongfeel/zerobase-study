@@ -90,7 +90,7 @@
             wifiDao.updateDist(X_SWIFI_MGR_NO, WIFIDIST);
         }
         response.sendRedirect("wifiData.jsp");
-    //와이파이 정보 보여주기
+    //와이파이 1개정보 보여주기
     } else if (command.equals("selectOne")) {
         String X_SWIFI_MGR_NO = request.getParameter("X_SWIFI_MGR_NO");
 
@@ -98,13 +98,14 @@
         WifiDto wifiDto = wifiDao.selectOne(X_SWIFI_MGR_NO);
         request.setAttribute("wifiDto", wifiDto);
 
+        BgDao bgDao = new BgDao();
+        List<BgDto> bgDtoList = bgDao.selectName();
+        request.setAttribute("bgDtoList", bgDtoList);
+
         pageContext.forward("selectOne.jsp");
 
 
 
-
-        // 북마크 보기
-    } else if (command.equals("bookmark")) {
 
 
     // 북마크 그룹 관리
@@ -192,6 +193,15 @@
         </script>
 <%
         }
+    } else if (command.equals("bookmarkInsert")) {
+        String B_WIFINAME = request.getParameter("X_SWIFI_MAIN_NM");
+        String B_NAME = request.getParameter("BG_NAME");
+
+
+    } else if (command.equals("bookmarkSelect")) {
+
+    } else if (command.equals("bookmarkDelete")) {
+
     }
 %>
 </body>
