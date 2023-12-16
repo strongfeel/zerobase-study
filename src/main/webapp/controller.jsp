@@ -106,15 +106,23 @@
 
 
 
-
-
     // 북마크 그룹 관리
     } else if (command.equals("bookmark-group")) {
-        BgDao bgDao = new BgDao();
-        List<BgDto> bgDtoList = bgDao.selectAll();
-        request.setAttribute("bgDtoList", bgDtoList);
+            BgDao bgDao = new BgDao();
+            List<BgDto> bgDtoList = bgDao.selectAll();
+            request.setAttribute("bgDtoList", bgDtoList);
 
-        pageContext.forward("bookmarkGroupMain.jsp");
+            pageContext.forward("bookmarkGroupMain.jsp");
+
+    } else if (command.equals("bgDeletePage")) {
+        int BG_ID = Integer.parseInt(request.getParameter("BG_ID"));
+
+        BgDao bgDao = new BgDao();
+        BgDto bgDto = bgDao.selectOne(BG_ID);
+        request.setAttribute("bgDto", bgDto);
+
+        pageContext.forward("bookmarkGroupDelete.jsp");
+
     //북마크 삭제
     } else if (command.equals("bgDelete")) {
         int BG_ID = Integer.parseInt(request.getParameter("BG_ID"));
@@ -193,15 +201,65 @@
         </script>
 <%
         }
+    // 북마크 추가하기 버튼
     } else if (command.equals("bookmarkInsert")) {
         String B_WIFINAME = request.getParameter("X_SWIFI_MAIN_NM");
         String B_NAME = request.getParameter("BG_NAME");
 
+        BdDto bdDto = new BdDto();
+        bdDto.setB_WIFINAME(B_WIFINAME);
+        bdDto.setB_NAME(B_NAME);
 
+        BdDao bdDao = new BdDao();
+        int res = bdDao.insert(bdDto);
+
+        if (res > 0) {
+%>
+        <script type="text/javascript">
+            alert("북마크 추가 성공");
+            location.href = "controller.jsp?command=bookmarkSelect";
+        </script>
+<%
+        }
+    // 북마크 보기 페이지 보여주기
     } else if (command.equals("bookmarkSelect")) {
+        BdDao bdDao = new BdDao();
+        List<BdDto> list = bdDao.selectAll();
+        request.setAttribute("bookmarkList", list);
 
+        pageContext.forward("bookmarkMain.jsp");
+
+    //북마크 삭제 페이지
+    } else if (command.equals("bookmarkDeletePage")) {
+        int B_ID = Integer.parseInt(request.getParameter("B_ID"));
+
+        BdDao bdDao = new BdDao();
+        BdDto bdDto = bdDao.selectOne(B_ID);
+        request.setAttribute("bdDto", bdDto);
+
+        pageContext.forward("bookmarkDeletePage.jsp");
+
+    // 북마크 삭제
     } else if (command.equals("bookmarkDelete")) {
+        int B_ID = Integer.parseInt(request.getParameter("B_ID"));
+        BdDao bdDao = new BdDao();
+        int res = bdDao.delete(B_ID);
 
+        if (res > 0) {
+%>
+        <script type="text/javascript">
+            alert("북마크 삭제 성공");
+            location.href = "controller.jsp?command=bookmarkSelect";
+        </script>
+<%
+        } else {
+%>
+        <script type="text/javascript">
+            alert("북마크 삭제 실패");
+            location.href = "controller.jsp?command=bookmarkSelect";
+        </script>
+<%
+        }
     }
 %>
 </body>

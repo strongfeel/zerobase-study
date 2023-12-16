@@ -52,8 +52,6 @@ public class BgDao {
                 bgDto.setBG_UPDATE(Timestamp.valueOf(BG_UPDATE));
 
                 BgDtoList.add(bgDto);
-
-                /*System.out.println(BG_ID + ", " + BG_NAME + ", " + BG_PRI + ", " + BG_IN_DATE + ", " + BG_UPDATE);*/
             }
 
         } catch (SQLException e) {
